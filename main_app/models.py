@@ -8,7 +8,7 @@ class Bike(models.Model):
     terrain_type = models.CharField(max_length=20)
 
     def __str__(self):
-        return self.name
+        return self.bike_model
 
     def get_absolute_url(self):
         return reverse('detail', kwargs={'bike_id': self.id})

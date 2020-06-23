@@ -1,14 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <!-- Leaving the action empty makes the form post to the same url used to display it -->
+  {% if bike %}
+    <h1>Edit {{ bike.bike_model }}</h1>
+  {% else %}
+    <h1>Add New Bike</h1>
+  {% endif %}
+
   <form action="" method="post">
-    <!-- Django requires the following for security purposes -->
     {% csrf_token %}
     <table>
-      <!-- Render the inputs inside of <tr>s & <td>s -->
       {{ form.as_table }}
     </table>
-    <input type="submit" value="Submit!" class="btn">
+
+    {% if bike %}
+      <input type="submit" value="Save Bike" class="btn">
+    {% else %}
+      <input type="submit" value="Add Bike" class="btn">
+    {% endif %}
   </form>
 {% endblock %}

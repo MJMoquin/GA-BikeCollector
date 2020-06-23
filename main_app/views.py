@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Bike
 
 def home(request):
@@ -16,3 +16,11 @@ def bikes_detail(request, bike_id):
 class BikeCreate(CreateView):
   model = Bike
   fields = '__all__'
+
+class BikeUpdate(UpdateView):
+  model = Bike
+  fields = '__all__'
+
+class BikeDelete(DeleteView):
+  model = Bike
+  success_url = '/bikes/'
