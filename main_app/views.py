@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.views.generic.edit import CreateView
 from .models import Bike
 
 def home(request):
@@ -11,3 +12,7 @@ def bikes_index(request):
 def bikes_detail(request, bike_id):
   bike = Bike.objects.get(id=bike_id)
   return render(request, 'bikes/detail.html', { 'bike': bike })
+
+class BikeCreate(CreateView):
+  model = Bike
+  fields = '__all__'
