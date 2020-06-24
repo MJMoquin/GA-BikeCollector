@@ -3,18 +3,51 @@
 
 <h1>Bike Details</h1>
 
-<div class="card">
-  <div class="card-content">
-    <span class="card-title">{{ bike.bike_model }}</span>
-        <p>Brand: {{ bike.bike_brand }}</p>
-        <p>Year: {{ bike.production_year }}</p>
-        <p>Terrain: {{ bike.terrain_type }}</p>
+<div class="row">
+  <div class="col s6">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">{{ bike.bike_model }}</span>
+          <p>Brand: {{ bike.bike_brand }}</p>
+          <p>Year: {{ bike.production_year }}</p>
+          <p>Terrain: {{ bike.terrain_type }}</p>
       </div>
+      <div class="card-action">
+        <a class="btn" href="{% url 'bike_update' bike.id %}">Edit</a>
+        <a class="btn" href="{% url 'bike_delete' bike.id %}">Delete</a>
+      </div>
+    </div>
   </div>
-  <div class="card-action">
-    <a class="btn" href="{% url 'bike_update' bike.id %}">Edit</a>
-    <a class="btn" href="{% url 'bike_delete' bike.id %}">Delete</a>
+  <div class="col s6">
+    <form action="{% url 'add_ride' bike.id %}" method="post">
+      {% csrf_token %}
+      {{ ride_form.as_p }}
+      <input type="submit" class="btn" value="Add Ride">
+    </form>
+    <table class="striped">
+      <thead>
+        <tr><th>Date</th><th>Ride</th></tr>
+      </thead>
+      <tbody>
+        {% for ride in bike.ride_set.all %}
+          <tr>
+            <td>{{ ride.date }}</td>
+            <td>{{ ride.duration }} Minutes </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
 </div>
+<script>
+  var dateEl = document.getElementById('id_date');
+  M.Datepicker.init(dateEl, {
+    format: 'yyyy-mm-dd',
+    defaultDate: new Date(),
+    setDefaultDate: true,
+    autoClose: true
+  });
+</script>
+
 
 {% endblock %}
